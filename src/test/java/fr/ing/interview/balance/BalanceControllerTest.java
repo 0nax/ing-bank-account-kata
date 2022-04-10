@@ -3,6 +3,7 @@ package fr.ing.interview.balance;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ConsultingControllerTest {
+public class BalanceControllerTest {
 
     @MockBean
     private BalanceService consultingService;
@@ -32,7 +33,7 @@ public class ConsultingControllerTest {
         when(consultingService.retrieveBalance(invalidAccountNumber)).thenReturn(new BigDecimal("100"));
 
         //Test & Assert
-        mockMvc.perform(get("/consulting/" + invalidAccountNumber)
+        mockMvc.perform(get("/balance/" + invalidAccountNumber)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -45,7 +46,7 @@ public class ConsultingControllerTest {
         when(consultingService.retrieveBalance(invalidAccountNumber)).thenReturn(new BigDecimal("100"));
 
         //Test & Assert
-        mockMvc.perform(get("/consulting/" + invalidAccountNumber)
+        mockMvc.perform(get("/balance/" + invalidAccountNumber)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
