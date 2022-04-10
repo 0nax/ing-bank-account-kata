@@ -44,7 +44,7 @@ class OperationsControllerTest {
     }
 
     @Test
-    public void invalid_amount() throws Exception {
+    public void withdraw_invalid_amount() throws Exception {
         // Setup
         OperationDTO operationDTO = new OperationDTO();
         operationDTO.setAccountNumber("01234567891");
@@ -52,12 +52,27 @@ class OperationsControllerTest {
         doNothing().when(operationService).withdraw(operationDTO);
 
         // Test & Assert
-        String content = asJsonString(operationDTO);
         mockMvc.perform(post("/operation/withdraw")
                 .content(asJsonString(operationDTO))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deposit_succesful() throws Exception {
+        // Setup
+        OperationDTO operationDTO = new OperationDTO();
+        operationDTO.setAccountNumber("01234567891");
+        operationDTO.setAmount(10);
+        doNothing().when(operationService).deposit(operationDTO);
+
+        // Test & Assert
+        mockMvc.perform(post("/operation/withdraw")
+                .content(asJsonString(operationDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     private static String asJsonString(final Object obj) {

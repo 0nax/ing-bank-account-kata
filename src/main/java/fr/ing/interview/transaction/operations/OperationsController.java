@@ -22,4 +22,10 @@ public class OperationsController {
         operationService.withdraw(operationDTO);
         return ResponseEntity.ok().body("withdraw successful");
     }
+
+    @PostMapping(value = "/deposit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deposit(@RequestBody @Validated OperationDTO operationDTO) {
+        operationService.deposit(operationDTO);
+        return ResponseEntity.ok().body("deposit successful");
+    }
 }

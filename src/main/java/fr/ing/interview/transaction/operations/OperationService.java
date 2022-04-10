@@ -4,4 +4,6 @@ public interface OperationService {
 
     void withdraw(OperationDTO operationDTO);
 
+    void deposit(OperationDTO operationDTO);
+
 }

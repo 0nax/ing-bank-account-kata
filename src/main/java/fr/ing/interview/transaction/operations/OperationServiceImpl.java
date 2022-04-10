@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 import static fr.ing.interview.balance.BalanceConstants.ACCOUNT_NOT_FOUND;
+import static fr.ing.interview.transaction.operations.OperationConstants.MINIMUM_DEPOST;
 import static java.math.BigDecimal.valueOf;
 
 @Service
@@ -31,6 +32,21 @@ public class OperationServiceImpl implements OperationService{
             operationRepository.save(account);
         } else {
             throw new InvalidOperationException("Operation not permited, insufficient balance");
+        }
+
+    }
+
+    @Override
+    public void deposit(OperationDTO operationDTO) {
+        Account account = operationRepository.retrieveAccount(operationDTO.getAccountNumber())
+                .orElseThrow(() -> new ResourceNotFoundExcpetion(ACCOUNT_NOT_FOUND));
+
+        if (operationDTO.getAmount() > MINIMUM_DEPOST){
+            BigDecimal newBalance = account.getBalance().add(valueOf(operationDTO.getAmount()));
+            account.setBalance(newBalance);
+            operationRepository.save(account);
+        } else {
+            throw new InvalidOperationException("Operation not permited, minimum deposit is 0,01");
         }
 
     }

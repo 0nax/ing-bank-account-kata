@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class OperationServiceImplTest {
@@ -25,7 +26,7 @@ class OperationServiceImplTest {
     private OperationRepository operationRepository;
 
     @Test
-    public void negative_balance(){
+    public void withdraw_negative_balance(){
         // Setup
         OperationDTO operationDTO = new OperationDTO();
         operationDTO.setAccountNumber("01234567891");
@@ -34,13 +35,32 @@ class OperationServiceImplTest {
         Account account = new Account();
         account.setAccountNumber("01234567891");
         account.setBalance(new BigDecimal("100"));
-        Mockito.when(operationRepository.retrieveAccount(operationDTO.getAccountNumber())).thenReturn(Optional.of(account));
+        when(operationRepository.retrieveAccount(operationDTO.getAccountNumber())).thenReturn(Optional.of(account));
 
         // Test
         Exception exception = assertThrows(InvalidOperationException.class, () -> operationService.withdraw(operationDTO));
 
         // Assert
         assertThat(exception.getMessage()).isEqualTo("Operation not permited, insufficient balance");
+    }
+
+    @Test
+    public void deposit_invalid_amount(){
+        // Setup
+        OperationDTO operationDTO = new OperationDTO();
+        operationDTO.setAccountNumber("01234567891");
+        operationDTO.setAmount(0.001);
+
+        Account account = new Account();
+        account.setAccountNumber("01234567891");
+        account.setBalance(new BigDecimal("100"));
+        when(operationRepository.retrieveAccount(operationDTO.getAccountNumber())).thenReturn(Optional.of(account));
+
+        // Test
+        Exception exception = assertThrows(InvalidOperationException.class, () -> operationService.deposit(operationDTO));
+
+        // Assert
+        assertThat(exception.getMessage()).isEqualTo("Operation not permited, minimum deposit is 0,01");
     }
 
 }
