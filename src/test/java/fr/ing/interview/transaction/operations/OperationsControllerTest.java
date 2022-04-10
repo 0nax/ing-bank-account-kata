@@ -44,22 +44,6 @@ class OperationsControllerTest {
     }
 
     @Test
-    public void withdraw_invalid_amount() throws Exception {
-        // Setup
-        OperationDTO operationDTO = new OperationDTO();
-        operationDTO.setAccountNumber("01234567891");
-        operationDTO.setAmount(0);
-        doNothing().when(operationService).withdraw(operationDTO);
-
-        // Test & Assert
-        mockMvc.perform(post("/operation/withdraw")
-                .content(asJsonString(operationDTO))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     public void deposit_succesful() throws Exception {
         // Setup
         OperationDTO operationDTO = new OperationDTO();

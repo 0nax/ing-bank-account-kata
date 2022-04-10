@@ -1,7 +1,7 @@
 package fr.ing.interview.balance;
 
 import fr.ing.interview.commons.ResourceNotFoundExcpetion;
-import fr.ing.interview.model.Account;
+import fr.ing.interview.model.AccountEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public BigDecimal retrieveBalance(String accountNumber) {
-        Account account = balanceRepository.retrieveBalanceFromAccount(accountNumber)
+        AccountEntity account = balanceRepository.retrieveBalanceFromAccount(accountNumber)
                 .orElseThrow(() -> new ResourceNotFoundExcpetion(ACCOUNT_NOT_FOUND));
         return account.getBalance();
     }

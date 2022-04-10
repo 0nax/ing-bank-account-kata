@@ -1,6 +1,6 @@
 package fr.ing.interview.balance;
 
-import fr.ing.interview.model.Account;
+import fr.ing.interview.model.AccountEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ class BalanceRepositoryTest {
         BigDecimal expectedBalance = new BigDecimal("100.50");
 
         // Test
-        Optional<Account> account = balanceRepository.retrieveBalanceFromAccount(accountNumber);
+        Optional<AccountEntity> account = balanceRepository.retrieveBalanceFromAccount(accountNumber);
         assertThat(account.isPresent()).isTrue();
 
         // Assert
@@ -39,7 +39,7 @@ class BalanceRepositoryTest {
         String fakeAccountNumber = "0123";
 
         // Test
-        Optional<Account> account = balanceRepository.retrieveBalanceFromAccount(fakeAccountNumber);
+        Optional<AccountEntity> account = balanceRepository.retrieveBalanceFromAccount(fakeAccountNumber);
 
         // Assert
         assertThat(account.isEmpty()).isTrue();

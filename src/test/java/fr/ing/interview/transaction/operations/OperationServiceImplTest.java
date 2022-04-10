@@ -2,9 +2,8 @@ package fr.ing.interview.transaction.operations;
 
 
 import fr.ing.interview.commons.InvalidOperationException;
-import fr.ing.interview.model.Account;
+import fr.ing.interview.model.AccountEntity;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,7 +31,7 @@ class OperationServiceImplTest {
         operationDTO.setAccountNumber("01234567891");
         operationDTO.setAmount(200);
 
-        Account account = new Account();
+        AccountEntity account = new AccountEntity();
         account.setAccountNumber("01234567891");
         account.setBalance(new BigDecimal("100"));
         when(operationRepository.retrieveAccount(operationDTO.getAccountNumber())).thenReturn(Optional.of(account));
@@ -51,7 +50,7 @@ class OperationServiceImplTest {
         operationDTO.setAccountNumber("01234567891");
         operationDTO.setAmount(0.001);
 
-        Account account = new Account();
+        AccountEntity account = new AccountEntity();
         account.setAccountNumber("01234567891");
         account.setBalance(new BigDecimal("100"));
         when(operationRepository.retrieveAccount(operationDTO.getAccountNumber())).thenReturn(Optional.of(account));

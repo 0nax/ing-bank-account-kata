@@ -1,7 +1,7 @@
 package fr.ing.interview.balance;
 
 import fr.ing.interview.commons.ResourceNotFoundExcpetion;
-import fr.ing.interview.model.Account;
+import fr.ing.interview.model.AccountEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +27,7 @@ class BalanceServiceImplTest {
     public void account_found_return_balance(){
         // Setup
         String accountNumber = "01234567891";
-        Account account = new Account("1", new BigDecimal("100"), accountNumber);
+        AccountEntity account = new AccountEntity("1", new BigDecimal("100"), accountNumber);
         when(balanceRepository.retrieveBalanceFromAccount(accountNumber)).thenReturn(Optional.of(account));
 
         // Test

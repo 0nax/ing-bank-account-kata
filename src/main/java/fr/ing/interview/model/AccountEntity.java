@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ACCOUNT")
-public class Account implements Serializable {
+public class AccountEntity implements Serializable {
 
     @Id
     @Column(name = "ID", updatable = false, nullable = false)
